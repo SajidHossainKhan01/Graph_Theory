@@ -1,0 +1,60 @@
+from __future__ import annotations
+from collections import defaultdict
+
+
+def find_start(graph: dict[any,list[any]]) -> any:
+    out_deg: dict[any,int] = defaultdict(lambda: 0)
+    in_deg: dict[any,int] = defaultdict(lambda: 0)
+    u: any
+    for u in graph:
+        v: any
+        for v in graph[u]:
+            out_deg[u] += 1
+            in_deg[v] += 1
+    start: any = list(graph.keys())[0]
+    u: any
+    for u in graph:
+        if out_deg[u]-in_deg[u] == 1:
+            start = u
+            break
+    return start
+
+
+def dfs(graph: dict[any,list[any]], vertex: any, out_deg: dict[any,int], output: list[any]) -> None:
+    while out_deg[vertex] > 0:
+        out_deg[vertex] -= 1
+        neighbor: any = graph[vertex][out_deg[vertex]]
+        dfs(graph, neighbor, out_deg, output)
+    output.append(vertex)
+        
+        
+def hierholzer(graph: dict[any,list[any]]) -> list[any]:  # assumes that the graph is semi-Eulerian
+    out_deg: dict[any,int] = {u: len(graph[u]) for u in graph}
+    start: any = find_start(graph)
+    output: list[any] = []
+    dfs(graph, start, out_deg, output)
+    output.reverse()
+    return output
+
+
+if __name__ == '__main__':
+    graph: dict[str,list[str]] = {
+        'A': ['A', 'D'],
+        'B': ['C', 'E'],
+        'C': ['G', 'B'],
+        'D': ['H', 'H', 'B'],
+        'E': ['A', 'J'],
+        'F': ['L', 'K', 'G'],
+        'G': ['K'],
+        'H': ['I', 'E'],
+        'I': ['D'],
+        'J': ['J', 'F'],
+        'K': ['F', 'C'],
+        'L': ['F']
+    }
+
+    print(hierholzer(graph))
+
+    # Output:
+    # ['D', 'B', 'E', 'A', 'A', 'D', 'H', 'I', 'D', 'H', 'E', 'J', 'J', 'F', 'G', 'K', 'F', 'L', 'F', 'K', 'C', 'B', 'C', 'G']
+{"threads":[{"position":0,"start":0,"end":863,"connection":"open"},{"position":1726,"start":864,"end":1726,"connection":"closed"}],"url":"https://att-c.udemycdn.com/2023-02-12_20-27-20-312506e6b5ff53d01e42004bfea4ed82/original.py?response-content-disposition=attachment%3B+filename%3Dhierholzer.py&Expires=1693145340&Signature=iXdNYjJVqb1CZFnHvGZAbtic5ssxGChCPdhpZmh0ltsv5nitBJwms8SDSkEFdrcpnEQ1qwM-YSb-BmWMeSZAw96Nct0iwwPuxKIszdt1OpFO5vV4tDDMB9UuviksWsA2up7DbknQviT~Ah4rJyo09XMa-0hbtONSxaOhHjuDdR30k1i7KERnX11pVsQPbsX78uL2G76F9kCUuOGD-0JUxFeimSOxUsi3ZJ4o4PXLwLjGwD5VQthYGm5LqUc3Zt9HgeM5X0HlYaP2Cs3GQ3VKzorAIyxDgmASG8AAeNd~PUkjIGJfbO2RdEylZq60qqikFU0e3r7NF7C9ZqIlHuitLg__&Key-Pair-Id=APKAITJV77WS5ZT7262A","method":"GET","port":443,"downloadSize":1726,"headers":{"content-type":"binary/octet-stream","content-length":"1726","connection":"close","date":"Sun, 27 Aug 2023 09:40:37 GMT","x-amz-replication-status":"COMPLETED","last-modified":"Sun, 12 Feb 2023 20:27:22 GMT","etag":"\"ecb25349d72486f9eda8232a5a12c428\"","x-amz-server-side-encryption":"AES256","x-amz-meta-qqfilename":"hierholzer.py","x-amz-version-id":"b_KvAeHsd8Z7TZ6s8LZBzUFZYL67meiR","content-disposition":"attachment; filename=hierholzer.py","accept-ranges":"bytes","server":"AmazonS3","x-cache":"Miss from cloudfront","via":"1.1 8e4700eb43d0f5579f360cfc02e71fac.cloudfront.net (CloudFront)","x-amz-cf-pop":"AMS1-C1","x-amz-cf-id":"KGaq7_wRGEGExTdHaE9_DOJOee_6iFCMTLlcLlEc-hSk15dX4zI6zQ==","x-cdn":"cf-cloudfront","vary":"Origin"}}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
